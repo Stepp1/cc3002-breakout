@@ -3,7 +3,7 @@ package controller;
 import logic.brick.Brick;
 import logic.level.ConcreteLevel;
 import logic.level.Level;
-import logic.level.nullLevel;
+import logic.level.NullLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class Game {
     /**
      * The default level.
      */
-    private Level initLevel = new nullLevel();
+    private Level initLevel = new NullLevel();
 
     /**
      * The current level.
@@ -35,13 +35,20 @@ public class Game {
     private int numberPoints;
 
     /**
+     * A list containing all the levels in this game.
+     */
+    private List<Level> levels = new ArrayList<>();
+
+
+    /**
+     *  Constructor of a Game
      *
-     * @param balls
+     * @param balls the number of balls given to this Game instance
      */
     public Game(int balls) {
-        numberBalls = balls;
-        currentLevel = initLevel;
-        numberPoints = 0;
+        this.numberBalls = balls;
+        this.currentLevel = initLevel;
+        this.numberPoints = 0;
     }
 
     public boolean winner() {
@@ -50,7 +57,7 @@ public class Game {
 
 
     public boolean isGameOver() {
-        return getBallsLeft() > 0;
+        return getBallsLeft() <= 0;
     }
 
 
@@ -58,8 +65,9 @@ public class Game {
         Level level = new ConcreteLevel();
 
         level.setNumberOfBricks(numberOfBricks);
-        level.setName("name");
-        level.setProbs(probOfGlass, probOfMetal, seed);
+        level.setName(name);
+        level.setProbs(probOfGlass, probOfMetal, seed, numberOfBricks);
+        level.setNumberOfBricks(this.getBricks().size());
 
         return level;
     }
@@ -68,8 +76,8 @@ public class Game {
         Level level = new ConcreteLevel();
 
         level.setNumberOfBricks(numberOfBricks);
-        level.setName("name");
-        level.setProbs(probOfGlass, 0, seed);
+        level.setName(name);
+        level.setProbs(probOfGlass, 0, seed, numberOfBricks);
 
         return level;
     }
@@ -113,8 +121,10 @@ public class Game {
     }
 
     public int setNumberOfBalls(int i) {
-        numberBalls = i;
-        return numberBalls;
+        if (i < 0)
+            return this.numberBalls = 0;
+
+        return this.numberBalls = i;
     }
 
 

@@ -2,11 +2,7 @@ package logic.level;
 
 import logic.brick.Brick;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-class AbstractLevel {
+abstract class AbstractLevel implements Level{
 
     /**
      * The name of the level.
@@ -31,11 +27,11 @@ class AbstractLevel {
     /**
      * A link to the next level.
      */
-    private Level nextLevel;
+    Level nextLevel;
 
 
 
-    public AbstractLevel(){
+    AbstractLevel(){
         this.name = "";
         this.numberBricks = 0;
 
@@ -46,7 +42,7 @@ class AbstractLevel {
      * @return the level's name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -63,8 +59,9 @@ class AbstractLevel {
      *
      * @param level the next level of a level object
      */
-    public void setNextLevel(Level level) {
+    public Level setNextLevel(Level level) {
         this.nextLevel = level;
+        return level;
     }
 
     /**
@@ -91,7 +88,7 @@ class AbstractLevel {
      * @param name the name of the level
      */
     public void setName(String name) {
-
+        this.name = name;
     }
 
 

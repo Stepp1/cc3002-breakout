@@ -12,9 +12,18 @@ public class ConcreteLevel extends AbstractLevel implements Level{
      */
     private int points;
 
+    /**
+     * The list with the Brick of this level
+     */
+    private List<Brick> bricks = new ArrayList<>();
+
+
+    /**
+     * Constructor of this class
+     */
     public ConcreteLevel() {
         super();
-        setNextLevel(new nullLevel());
+        setNextLevel(new NullLevel());
     }
 
     /**
@@ -25,33 +34,47 @@ public class ConcreteLevel extends AbstractLevel implements Level{
      * @param probOfGlass the probability of having a glass brick
      * @param probOfMetal the probability of having a glass brick
      * @param seed        the seed that sets the number of bricks in a given instance
+     * @param numberOfBricks    the number of bricks of wood or glass and the number of metal bricks
      */
-    public void setProbs(double probOfGlass, double probOfMetal, int seed) {
+    public void setProbs(double probOfGlass, double probOfMetal, int seed, int numberOfBricks) {
         Random rng = new Random(seed);
-        List<Brick> bricks = new ArrayList<>();
+
         int points = 0;
-        for (int i = 0; i < getNumberOfBricks(); i++){
+        for (int i = 0; i < numberOfBricks; i++){
             double random = rng.nextDouble();
             if (random <= probOfGlass){
                 GlassBrick gb = new GlassBrick();
                 points += gb.getPoints();
+                bricks.add(gb);
 
             }
             else{
                 WoodenBrick wb = new WoodenBrick();
                 points += wb.getPoints();
+                bricks.add(wb);
             }
         }
 
-        for (int i = 0; i < getNumberOfBricks(); i++){
+        for (int i = 0; i < numberOfBricks; i++){
             double random = rng.nextDouble();
             if (random <= probOfMetal){
                 MetalBrick mb = new MetalBrick();
                 points += mb.getPoints();
+                bricks.add(mb);
             }
         }
 
         setPoints(points);
+    }
+
+    /**
+     * Method that overrides the superclass behavior
+     *
+     * @return the number of Brick in a concrete level
+     */
+    @Override
+    public int getNumberOfBricks() {
+        return this.getBricks().size();
     }
 
     private void setPoints(int points) {
@@ -62,6 +85,7 @@ public class ConcreteLevel extends AbstractLevel implements Level{
      *
      * @return true if the level is playable, false otherwise
      */
+    @Override
     public boolean isPlayableLevel() {
         return true;
     }
@@ -72,7 +96,7 @@ public class ConcreteLevel extends AbstractLevel implements Level{
      * @return the bricks in the level
      */
     public List<Brick> getBricks() {
-        return null;
+        return this.bricks;
     }
 
     /**
@@ -81,7 +105,7 @@ public class ConcreteLevel extends AbstractLevel implements Level{
      * @return true if the level's next level is playable, false otherwise
      */
     public boolean hasNextLevel() {
-        return true;
+        return this.getNextLevel().isPlayableLevel();
     }
 
     /**
@@ -99,6 +123,11 @@ public class ConcreteLevel extends AbstractLevel implements Level{
      * @param level the level to be added
      */
     public Level addPlayingLevel(Level level) {
-        return this.getNextLevel().addPlayingLevel(level);
+        if(!this.getNextLevel().isPlayableLevel()){
+            return this.setNextLevel(level);
+        }
+        else{
+            return this.getNextLevel().addPlayingLevel(level);
+        }
     }
 }

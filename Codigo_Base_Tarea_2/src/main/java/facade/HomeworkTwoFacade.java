@@ -126,7 +126,7 @@ public class HomeworkTwoFacade {
      * @param level the level to be added
      */
     public void addPlayingLevel(Level level) {
-
+        game.getCurrentLevel().addPlayingLevel(level);
     }
 
     /**

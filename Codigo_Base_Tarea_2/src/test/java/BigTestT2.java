@@ -2,6 +2,7 @@ import facade.HomeworkTwoFacade;
 import logic.brick.Brick;
 import logic.brick.GlassBrick;
 import logic.brick.MetalBrick;
+import logic.brick.WoodenBrick;
 import logic.level.Level;
 import org.junit.Before;
 import org.junit.Test;

@@ -71,7 +71,7 @@ public interface Level {
      *
      * @param level the next level of a level object
      */
-    void setNextLevel(Level level);
+    Level setNextLevel(Level level);
 
     /**
      * Gets the level name.
@@ -95,13 +95,12 @@ public interface Level {
     void setName(String name);
 
     /**
-     * Sets the probabilities of the glass bricks and metal bricks in the level.
-     * After that it calculates and sets the number of each brick type.
-     * The seed is used to have the same number of brick types in a given instance.
+     * A nullLevel cannot create bricks. This method does nothing.
      *
-     * @param probOfGlass the probability of having a glass brick
-     * @param probOfMetal the probability of having a glass brick
-     * @param seed the seed that sets the number of bricks in a given instance
+     * @param probOfGlass       the probability of having a glass brick
+     * @param probOfMetal       the probability of having a glass brick
+     * @param seed              the seed that sets the number of bricks in a given instance
+     * @param numberOfBricks    the number of bricks of wood or glass and the number of metal bricks
      */
-    void setProbs(double probOfGlass, double probOfMetal, int seed);
+    void setProbs(double probOfGlass, double probOfMetal, int seed, int numberOfBricks);
 }

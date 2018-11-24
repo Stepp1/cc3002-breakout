@@ -2,6 +2,33 @@ package logic.brick;
 
 public class AbstractBrick implements Brick {
 
+    /**
+     * The default number of given points
+     */
+    private int default_points;
+
+    /**
+     * Number of times the brick must hit to be destroyed
+     */
+    private int hits_to_destroy;
+
+    /**
+     * Indicates if the brick has been destroyed
+     */
+    private boolean destroyed;
+
+    /**
+     * Constructor method to be used by the subclasses
+     *
+     * @param default_points    the number of points that a brick gives when it's been destroyed
+     * @param hits_to_destroy   the number of hits left to be destroyed
+     * @param destroyed         Indicator of the status of a brick
+     */
+    AbstractBrick(int default_points, int hits_to_destroy, boolean destroyed) {
+        this.default_points = default_points;
+        this.hits_to_destroy = hits_to_destroy;
+        this.destroyed = destroyed;
+    }
 
     /**
      * Defines that a brick has been hit.
@@ -19,7 +46,7 @@ public class AbstractBrick implements Brick {
      */
     @Override
     public boolean isDestroyed() {
-        return false;
+        return this.destroyed;
     }
 
     /**
@@ -29,7 +56,7 @@ public class AbstractBrick implements Brick {
      */
     @Override
     public int getScore() {
-        return 0;
+        return this.default_points;
     }
 
     /**
@@ -39,6 +66,15 @@ public class AbstractBrick implements Brick {
      */
     @Override
     public int remainingHits() {
-        return 0;
+        return this.hits_to_destroy;
+    }
+
+    /**
+     * Method that returns the number of points that a Brick gives gives when it has been destroyed
+     *
+     * @return the points that this Brick gives when it has been destroyed
+     */
+    public int getPoints() {
+        return this.getScore();
     }
 }

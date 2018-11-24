@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class nullLevel extends AbstractLevel implements Level {
+public class NullLevel extends AbstractLevel implements Level {
 
-    public nullLevel(){
+
+    public NullLevel(){
         super();
-        setNextLevel(this);
+        super.nextLevel = this;
     }
 
 
@@ -31,8 +32,7 @@ public class nullLevel extends AbstractLevel implements Level {
      */
     @Override
     public List<Brick> getBricks() {
-        List<Brick> emptyList = new ArrayList<>();
-        return emptyList;
+        return new ArrayList<>();
     }
 
     /**
@@ -62,10 +62,11 @@ public class nullLevel extends AbstractLevel implements Level {
      * @param probOfGlass the probability of having a glass brick
      * @param probOfMetal the probability of having a glass brick
      * @param seed        the seed that sets the number of bricks in a given instance
+     * @param numberOfBricks    the number of bricks of wood or glass and the number of metal bricks
      */
     @Override
-    public void setProbs(double probOfGlass, double probOfMetal, int seed) {
-
+    public void setProbs(double probOfGlass, double probOfMetal, int seed, int numberOfBricks) {
+        // Does nothing
     }
 
     /**
@@ -75,7 +76,6 @@ public class nullLevel extends AbstractLevel implements Level {
      */
     @Override
     public Level addPlayingLevel(Level level) {
-        level.setNextLevel(new nullLevel());
-        return level;
+       return level;
     }
 }
