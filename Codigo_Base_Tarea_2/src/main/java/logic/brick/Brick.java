@@ -1,5 +1,10 @@
 package logic.brick;
 
+import controller.Game;
+
+
+import java.util.Observer;
+
 /**
  * Interface that represents a brick object.
  * <p>
@@ -9,7 +14,11 @@ package logic.brick;
  */
 public interface Brick {
 
-
+    /**
+     * Method used to add a Game as Observer
+     * @param game the Observer
+     */
+    void addGame(Game game);
 
     /**
      * Defines that a brick has been hit.
@@ -37,4 +46,10 @@ public interface Brick {
      * @return the remaining hits to destroy de brick
      */
     int remainingHits();
+
+    /**
+     * Method used to accept an Observer
+     * @param game the Observer
+     */
+    void accept(Game game);
 }

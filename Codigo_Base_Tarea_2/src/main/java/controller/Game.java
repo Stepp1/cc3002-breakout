@@ -1,6 +1,9 @@
 package controller;
 
 import logic.brick.Brick;
+import logic.brick.GlassBrick;
+import logic.brick.MetalBrick;
+import logic.brick.WoodenBrick;
 import logic.level.ConcreteLevel;
 import logic.level.Level;
 import logic.level.NullLevel;
@@ -15,7 +18,7 @@ import java.util.Observer;
  *
  * @author Juan-Pablo Silva
  */
-public class Game implements Observer {
+public class Game{
 
     //          Fields
 
@@ -44,6 +47,7 @@ public class Game implements Observer {
      */
     private List<Level> levels = new ArrayList<>();
 
+
     //          Constructor
 
     /**
@@ -57,7 +61,14 @@ public class Game implements Observer {
         this.numberPoints = 0;
     }
 
-
+    /**
+     * Gets the state of the player.
+     *
+     * @return true if the player won the game, false otherwise
+     */
+    public boolean winner() {
+        return false;
+    }
 
     /**
      * Method that checks if the game is over
@@ -86,7 +97,10 @@ public class Game implements Observer {
         level.setName(name);
         level.setProbs(probOfGlass, probOfMetal, seed, numberOfBricks);
         level.setNumberOfBricks(this.getBricks().size());
-
+        List<Brick> bricks = level.getBricks();
+        for(Brick b : bricks){
+            b.addGame(this);
+        }
         return level;
     }
 
@@ -163,7 +177,7 @@ public class Game implements Observer {
      * @return the current Level
      */
     public Level getCurrentLevel() {
-        return currentLevel;
+        return this.currentLevel;
     }
 
     /**
@@ -172,7 +186,7 @@ public class Game implements Observer {
      * @param level the Level to be changed to
      */
     public void setCurrentLevel(Level level) {
-        currentLevel = level;
+        this.currentLevel = level;
     }
 
     /**
@@ -181,7 +195,16 @@ public class Game implements Observer {
      * @return  the number of points
      */
     public int getCurrentPoints() {
-        return numberPoints;
+        return this.numberPoints;
+    }
+
+    /**
+     * Method used to add points.
+     * They're obtained through the Game by destroying Bricks
+     *
+     */
+    private void addCurrentPoints(int newPoints) {
+        this.numberPoints += newPoints;
     }
 
     /**
@@ -190,6 +213,7 @@ public class Game implements Observer {
      * @param level the Level to be added
      */
     public void addPlayingLevel(Level level) { currentLevel.addPlayingLevel(level);}
+
 
     /**
      * A method used to get the number of balls left to play with
@@ -215,16 +239,45 @@ public class Game implements Observer {
 
 
     /**
-     * This method is called whenever the observed object is changed. An
-     * application calls an <tt>Observable</tt> object's
-     * <code>notifyObservers</code> method to have all the object's
-     * observers notified of the change.
+     * This method is called whenever the observed object is changed.
      *
-     * @param o   the observable object.
-     * @param arg an argument passed to the <code>notifyObservers</code>
+     * @param arg observed Brick
      */
-    @Override
-    public void update(Observable o, Object arg) {
+    public void update(Object arg) {
+        if (arg instanceof Brick) {
+            ((Brick) arg).accept(this);
+        }
+    }
 
+    /**
+     * This method is used whenever the observed object is changed.
+     *
+     * @param metalBrick the destroyed Brick
+     */
+    public void visitMetalBrick(MetalBrick metalBrick) {
+        int brickScore = metalBrick.getScore();
+        this.addCurrentPoints(brickScore);
+
+        this.setNumberOfBalls(getBallsLeft() + 1);
+    }
+
+    /**
+     * This method is used whenever the observed object is changed.
+     *
+     * @param woodenBrick the destroyed Brick
+     */
+    public void visitWoodenBrick(WoodenBrick woodenBrick) {
+        int brickScore = woodenBrick.getScore();
+        this.addCurrentPoints(brickScore);
+    }
+
+    /**
+     * This method is used whenever the observed object is changed.
+     *
+     * @param glassBrick the destroyed Brick
+     */
+    public void visitGlassBrick(GlassBrick glassBrick) {
+        int brickScore = glassBrick.getScore();
+        this.addCurrentPoints(brickScore);
     }
 }

@@ -40,9 +40,9 @@ public class MetalBrick extends AbstractBrick{
 
     //          Visitable Element
 
-    /*
-    public void accept(GameVisitor v){
+
+    public void accept(Game v){
         v.visitMetalBrick(this);
     }
-    */
+
 }

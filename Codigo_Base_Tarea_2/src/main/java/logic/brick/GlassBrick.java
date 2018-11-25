@@ -38,9 +38,9 @@ public class GlassBrick extends AbstractBrick{
 
     //          Visitable Element
 
-    /*
-    public void accept(GameVisitor v){
+
+    public void accept(Game v){
         v.visitGlassBrick(this);
     }
-    */
+
 }

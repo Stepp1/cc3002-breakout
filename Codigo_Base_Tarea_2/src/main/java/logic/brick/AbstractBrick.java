@@ -1,6 +1,8 @@
 package logic.brick;
 
-public class AbstractBrick implements Brick {
+import controller.Game;
+
+public abstract class AbstractBrick implements Brick {
 
     /**
      * The default number of given points
@@ -18,6 +20,11 @@ public class AbstractBrick implements Brick {
     private boolean destroyed;
 
     /**
+     *
+     */
+    private Game game;
+
+    /**
      * Constructor method to be used by the subclasses
      *
      * @param default_points    the number of points that a brick gives when it's been destroyed
@@ -30,6 +37,14 @@ public class AbstractBrick implements Brick {
         this.destroyed = destroyed;
     }
 
+
+    /**
+     * Method used to add a Game as Observer
+     * @param game the Observer
+     */
+    public void addGame(Game game){
+        this.game = game;
+    }
     /**
      * Defines that a brick has been hit.
      * Implementations should consider the events that a hit to a brick can trigger.
@@ -40,9 +55,14 @@ public class AbstractBrick implements Brick {
 
         if(this.remainingHits() <= 0){
             this.setDestroyed();
-            //this.notify();
+            this.notifyGame(this);
         }
     }
+
+    private void notifyGame(Brick brick) {
+       this.game.update(brick);
+    }
+
 
     /**
      * Gets whether the brick object is destroyed or not.
