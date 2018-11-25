@@ -36,7 +36,12 @@ public class AbstractBrick implements Brick {
      */
     @Override
     public void hit() {
+        this.wasHit();
 
+        if(this.remainingHits() <= 0){
+            this.setDestroyed();
+            //this.notify();
+        }
     }
 
     /**
@@ -76,5 +81,21 @@ public class AbstractBrick implements Brick {
      */
     public int getPoints() {
         return this.getScore();
+    }
+
+    /**
+     * Method that sets the Brick status as destroyed
+     */
+    private void setDestroyed() {
+        this.destroyed = true;
+    }
+
+    /**
+     * Method that updates every time a Brick is hit
+     */
+    private void wasHit(){
+        if(this.hits_to_destroy > 0) {
+            this.hits_to_destroy -= 1;
+        }
     }
 }
