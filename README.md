@@ -28,3 +28,8 @@ The project implements the following specifications:
 * Name the project as you please.
 * If you're using the recommended IntelliJ IDE, allow it to overwrite the existing .idea folder.
 * And you're done!
+
+
+## Working on the GUI
+
+Implementing the GUI in the provided Base code (including all the logic and game controller finished). I'll try to combine my previous code with the one provided later.
