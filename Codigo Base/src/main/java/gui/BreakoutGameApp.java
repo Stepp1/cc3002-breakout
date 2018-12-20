@@ -29,6 +29,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static gui.BreakoutEntityFactory.*;
 
+/**
+ * Main class for handling game gui and interactions of a Breakout Game
+ *
+ * @author Victor Faraggi
+ *
+ * @see GameApplication
+ * @see HomeworkTwoFacade
+ */
 
 public class BreakoutGameApp extends GameApplication {
 
@@ -87,10 +95,6 @@ public class BreakoutGameApp extends GameApplication {
       */
     private Random random_number_generator = new Random();
 
-    /**
-     * Stores the levels to be played
-     */
-    private List<Level> levels = new LinkedList<>();
 
     /**
      * Stores a boolean that indicates if the ball has been launched
@@ -127,6 +131,7 @@ public class BreakoutGameApp extends GameApplication {
             getAudioPlayer().setGlobalMusicVolume(volume);
             FXGL.getAudioPlayer().playMusic("hansatom_-_Drugs_of_Choice_2.mp3");
         }*/
+
         getAudioPlayer().setGlobalMusicVolume(0.6);
         FXGL.getAudioPlayer().loopBGM("hansatom_-_Drugs_of_Choice_2.mp3");
 
@@ -201,6 +206,9 @@ public class BreakoutGameApp extends GameApplication {
         );
     }
 
+
+    // Consumer to check if user wants to keep playing
+
     private Consumer<Boolean> check = (x) ->{
         if(x){
             getGameWorld().clear();
@@ -209,6 +217,7 @@ public class BreakoutGameApp extends GameApplication {
     };
 
 
+    // Function to start a new Game
 
     private void startGame(boolean started){
         Level lvl = breakout.newLevelWithBricksFull("level", 30, 0.5, 0.34, 0);
@@ -219,6 +228,9 @@ public class BreakoutGameApp extends GameApplication {
         breakout.setCurrentLevel(lvl);
         setBricks(breakout.getCurrentLevel());
     }
+
+
+    //Helper function
 
     private void setBricks(Level lvl){
         List<Entity> entities = new LinkedList<>();
@@ -257,7 +269,7 @@ public class BreakoutGameApp extends GameApplication {
     }
 
 
-// Actions
+    // Actions
 
     private UserAction MakeLevel = new UserAction("Make a new Level") {
         @Override

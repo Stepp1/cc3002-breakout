@@ -11,6 +11,7 @@ import logic.brick.AbstractBrick;
         *
         * @see Component
         */
+
 public class BrickComponent extends Component {
 
     /**

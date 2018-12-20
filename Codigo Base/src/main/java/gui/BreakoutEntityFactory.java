@@ -2,6 +2,7 @@ package gui;
 
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.RenderLayer;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
@@ -17,9 +18,24 @@ import logic.brick.GlassBrick;
 import logic.brick.MetalBrick;
 import logic.brick.WoodenBrick;
 
-class BreakoutEntityFactory {
 
+/**
+ * Factory class responsible for generating {@link Entity} type objects.
+ * They can be added to the {@link com.almasb.fxgl.entity.GameWorld} inside fo {@link com.almasb.fxgl.app.GameApplication}.
+ *
+ * @see BreakoutGameApp
+ * @see EntityFactory
+ *
+ * @author Victor Faraggi
+ *
+ */
+class BreakoutEntityFactory implements EntityFactory {
 
+    /**
+     * Creates an entity with nothing but a plain black background color, sized as the window rectangle.
+     *
+     * @return  Black background strapped to an entity.
+     */
     static Entity newBackground() {
         return Entities.builder()
                 .viewFromNode(new Rectangle(800, 800, Color.BLACK))
@@ -45,6 +61,12 @@ class BreakoutEntityFactory {
     final static int playerWidth= 150;
     private final static int playerHeight= 10;
 
+    /**
+     * Creates a new entity representing the player, it can freely left and right.
+     * It is used to bounce the ball back to the bricks.
+     *
+     * @return  Entity representing the player.
+     */
     static Entity newPlayer(double x, double y) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.STATIC);
@@ -63,7 +85,11 @@ class BreakoutEntityFactory {
                 .build();
     }
 
-
+    /**
+     * Creates a new entity representing the game's ball, that can freely move and bump on collide entities on the board.
+     *
+     * @return  Entity representing the game's ball.
+     */
     static Entity newBall(double x, double y) {
         PhysicsComponent physics = new PhysicsComponent();
 
