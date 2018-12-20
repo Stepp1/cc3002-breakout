@@ -9,6 +9,7 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.settings.GameSettings;
+import com.almasb.fxgl.util.Consumer;
 import controller.Game;
 import facade.HomeworkTwoFacade;
 import gui.control.BrickComponent;
@@ -24,6 +25,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static gui.BreakoutEntityFactory.*;
 
@@ -108,15 +110,17 @@ public class BreakoutGameApp extends GameApplication {
     protected void initGame() {
 
         breakout = new HomeworkTwoFacade();
+
         List<Entity> entities = new LinkedList<>();
+
         entities.add(newBackground());
-        Entity ball = newBall(350, 759);
-        entities.add(ball);
+        entities.add(newBall(350, 759));
         entities.add(newWalls());
         entities.add(newPlayer(playerX, playerY));
-        startGame();
 
-        //resetGame();
+        for(Entity e : entities)
+            getGameWorld().addEntity(e);
+
         /*
         if (!mute) {
             double volume = 0.6;
@@ -150,49 +154,74 @@ public class BreakoutGameApp extends GameApplication {
                     @Override
                     protected void onHitBoxTrigger(Entity ball, Entity wall,
                                                    HitBox boxBall, HitBox boxWall) {
+
                         if (boxWall.getName().equals("BOT")) {
                             ball.removeFromWorld();
                             breakout.dropBall();
                             launched = false;
-                            if(breakout.isGameOver()) {
-                                //newLife();
+
+                            if(!breakout.isGameOver()) {
+                                newLife();
+                            }
+                            else{
+                                getGameWorld().clear();
+                                getGameWorld().addEntity(newBackground());
+                                getDisplay().showConfirmationBox("Quieres jugar de nuevo?",  check);
                             }
                         }
                     }
+
+                    private void newLife() {
+                        Entity player = getGameWorld().getEntitiesByType(Type.PLAYER).get(0);
+                        getGameWorld().addEntity(newBall(player.getX(), player.getY() - 20));
+                    }
                 }
         );
-
 
 
         getPhysicsWorld().addCollisionHandler(
                 new CollisionHandler(Type.BALL, Type.BRICK) {
                     @Override
                     protected void onCollision(Entity ball, Entity brick) {
+                        Level current = breakout.getCurrentLevel();
                         brick.getComponent(BrickComponent.class).getBrick().hit();
+                        Level isCurrent = breakout.getCurrentLevel();
+
                         if(brick.getComponent(BrickComponent.class).getBrick().isDestroyed()){
                             getGameWorld().removeEntity(brick);
+                        }
+
+                        if(!current.equals(isCurrent)){
+                            getGameWorld().getEntitiesByType(Type.BRICK)
+                                    .forEach(e -> getGameWorld().removeEntity(e));
+                            setBricks(isCurrent);
                         }
                     }
                 }
         );
-
     }
 
+    private Consumer<Boolean> check = (x) ->{
+        if(x){
+            getGameWorld().clear();
+            initGame();
+        }
+    };
 
-    private void startGame() {
-        List<Entity> old_entities = new LinkedList<>(getGameWorld().getEntities());
-        getGameWorld().removeEntities(old_entities);
 
 
+    private void startGame(boolean started){
         Level lvl = breakout.newLevelWithBricksFull("level", 30, 0.5, 0.34, 0);
+        if(started){
+            breakout.addPlayingLevel(lvl);
+            return;
+        }
         breakout.setCurrentLevel(lvl);
+        setBricks(breakout.getCurrentLevel());
+    }
 
+    private void setBricks(Level lvl){
         List<Entity> entities = new LinkedList<>();
-
-        entities.add(newBackground());
-        entities.add(newBall(350, 759));
-        entities.add(newWalls());
-        entities.add(newPlayer(playerX, playerY));
 
         int posX = 25;
         int posY = 30;
@@ -221,15 +250,7 @@ public class BreakoutGameApp extends GameApplication {
         for (Entity e : entities) {
             getGameWorld().addEntity(e);
         }
-
-        /*
-        if (!mute) {
-            getAudioPlayer().stopMusic(background_song);
-            getAudioPlayer().playMusic(background_song);
-        }*/
-
     }
-
 
     public static void main(String... args) {
         launch(args);
@@ -241,27 +262,38 @@ public class BreakoutGameApp extends GameApplication {
     private UserAction MakeLevel = new UserAction("Make a new Level") {
         @Override
         protected void onAction() {
-
+            if(breakout.hasCurrentLevel()){
+                startGame(true);
+            }
+            else{
+                //crear nivel desde cero
+                startGame(false);
+            }
         }
     };
 
     private UserAction MoveRightAction = new UserAction("Move Right") {
         @Override
         protected void onAction() {
+            AtomicBoolean moves = new AtomicBoolean(true);
+            getGameWorld().getEntitiesByType(Type.PLAYER)
+                    .forEach(e -> e.getComponent(PhysicsComponent.class).reposition(new Point2D(e.getX() + 5, e.getY()))); // move right 5 pixels to the right
+            getGameWorld().getEntitiesByType(Type.PLAYER)
+                    .forEach(e -> moves.set(verifyPositionRight(e)));
 
-            getGameWorld().getEntitiesByType(Type.PLAYER)
-                    .forEach(e -> e.getComponent(PhysicsComponent.class).reposition(new Point2D(e.getX() + 5, playerY))); // move right 5 pixels
-            getGameWorld().getEntitiesByType(Type.PLAYER)
-                    .forEach(this::verifyPositionRight);
-            if (!launched){
+            if (!launched && moves.get()){
                 getGameWorld().getEntitiesByType(Type.BALL)
-                        .forEach(e -> e.getComponent(PhysicsComponent.class).reposition(new Point2D(e.getX() + 5, e.getY()))); // move right 5 pixels
+                        .forEach(e -> e.getComponent(PhysicsComponent.class).reposition(new Point2D(e.getX() + 5, e.getY()))); // move right 5 pixels to the right
             }
         }
 
-        private void verifyPositionRight(Entity e) {
+        private boolean verifyPositionRight(Entity e) {
             if (e.getX() + playerWidth >= gameSizeX) {
                 e.getComponent(PhysicsComponent.class).reposition(new Point2D(gameSizeX - playerWidth, playerY));
+                return false;
+            }
+            else{
+                return true;
             }
         }
     };
@@ -269,19 +301,25 @@ public class BreakoutGameApp extends GameApplication {
     private UserAction MoveLeftAction = new UserAction("Move Left") {
         @Override
         protected void onAction() {
+            AtomicBoolean moves = new AtomicBoolean(true);
             getGameWorld().getEntitiesByType(Type.PLAYER)
-                    .forEach(e -> e.getComponent(PhysicsComponent.class).reposition(new Point2D(e.getX() - 5, playerY))); // move left 5 pixels
+                    .forEach(e -> e.getComponent(PhysicsComponent.class).reposition(new Point2D(e.getX() - 5, e.getY()))); // move left 5 pixels to the left
             getGameWorld().getEntitiesByType(Type.PLAYER)
-                    .forEach(this::verifyPositionLeft);
-            if (!launched){
+                    .forEach(e -> moves.set(verifyPositionLeft(e)));
+            if (!launched && moves.get()){
                 getGameWorld().getEntitiesByType(Type.BALL)
-                        .forEach(e -> e.getComponent(PhysicsComponent.class).reposition(new Point2D(e.getX() - 5, e.getY()))); // move right 5 pixels
+                        .forEach(e -> e.getComponent(PhysicsComponent.class).reposition(new Point2D(e.getX() - 5, e.getY()))); // move right 5 pixels to the left
+
             }
         }
 
-        private void verifyPositionLeft(Entity e) {
+        private boolean verifyPositionLeft(Entity e) {
             if (e.getX() <= 0) {
                 e.getComponent(PhysicsComponent.class).reposition(new Point2D(0, playerY));
+                return false;
+            }
+            else {
+                return true;
             }
         }
     };

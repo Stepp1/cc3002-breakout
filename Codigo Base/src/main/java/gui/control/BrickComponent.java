@@ -23,8 +23,7 @@ public class BrickComponent extends Component {
      *
      * @param linked_game_object    Hittable to store.
      */
-    public BrickComponent(AbstractBrick linked_game_object) { brick = linked_game_object;
-    }
+    public BrickComponent(AbstractBrick linked_game_object) { this.brick = linked_game_object; }
 
 
     /**

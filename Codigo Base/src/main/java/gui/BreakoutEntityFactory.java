@@ -17,10 +17,10 @@ import logic.brick.GlassBrick;
 import logic.brick.MetalBrick;
 import logic.brick.WoodenBrick;
 
-public class BreakoutEntityFactory {
+class BreakoutEntityFactory {
 
 
-    public static Entity newBackground() {
+    static Entity newBackground() {
         return Entities.builder()
                 .viewFromNode(new Rectangle(800, 800, Color.BLACK))
                 .renderLayer(RenderLayer.BACKGROUND)
@@ -32,7 +32,7 @@ public class BreakoutEntityFactory {
      *
      * @return  Invisible collidable walls.
      */
-    public static Entity newWalls() {
+    static Entity newWalls() {
         Entity walls = Entities.makeScreenBounds(100);
         walls.setType(BreakoutGameApp.Type.WALL);
         walls.addComponent(new CollidableComponent(true));
@@ -42,10 +42,10 @@ public class BreakoutEntityFactory {
 
 
     //  Moving game entities
-    protected final static int playerWidth= 150;
-    protected final static int playerHeight= 10;
+    final static int playerWidth= 150;
+    private final static int playerHeight= 10;
 
-    public static Entity newPlayer(double x, double y) {
+    static Entity newPlayer(double x, double y) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.STATIC);
         physics.setFixtureDef(
@@ -64,7 +64,7 @@ public class BreakoutEntityFactory {
     }
 
 
-    public static Entity newBall(double x, double y) {
+    static Entity newBall(double x, double y) {
         PhysicsComponent physics = new PhysicsComponent();
 
         physics.setOnPhysicsInitialized(
@@ -92,7 +92,7 @@ public class BreakoutEntityFactory {
      * @param owner Hittable containing the logic for the entity.
      * @return  Entity holding the owner.
      */
-    public static Entity newGlassBrick(int x, int y, GlassBrick owner) {
+    static Entity newGlassBrick(int x, int y, GlassBrick owner) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.STATIC);
         physics.setFixtureDef(
