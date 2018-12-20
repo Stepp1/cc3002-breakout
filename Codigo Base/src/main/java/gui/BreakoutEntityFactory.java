@@ -43,7 +43,7 @@ public class BreakoutEntityFactory {
 
     //  Moving game entities
     protected final static int playerWidth= 150;
-    protected final static int playerHeigth= 10;
+    protected final static int playerHeight= 10;
 
     public static Entity newPlayer(double x, double y) {
         PhysicsComponent physics = new PhysicsComponent();
@@ -57,17 +57,18 @@ public class BreakoutEntityFactory {
         return Entities.builder()
                 .at(x, y)
                 .type(BreakoutGameApp.Type.PLAYER)
-                .bbox(new HitBox("player", BoundingShape.box(playerWidth, playerHeigth)))
+                .bbox(new HitBox("player", BoundingShape.box(playerWidth, playerHeight)))
                 .with(physics, new CollidableComponent(true))
-                .viewFromNode(new Rectangle(playerWidth, playerHeigth, Color.GREY))
+                .viewFromNode(new Rectangle(playerWidth, playerHeight, Color.GREY))
                 .build();
     }
 
 
     public static Entity newBall(double x, double y) {
         PhysicsComponent physics = new PhysicsComponent();
+
         physics.setOnPhysicsInitialized(
-                () -> physics.setLinearVelocity(5 * 60, -5 * 60));
+                () -> physics.setLinearVelocity(0, 0));
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(
                 new FixtureDef()
@@ -75,11 +76,11 @@ public class BreakoutEntityFactory {
                         .density(0.1f));
 
         return Entities.builder()
-                .at(x, y)
+                .at(x + playerWidth/2.0 - 5, y)
                 .type(BreakoutGameApp.Type.BALL)
-                .bbox(new HitBox("Ball", BoundingShape.circle(10)))
+                .bbox(new HitBox("Ball", BoundingShape.circle(7)))
                 .with(physics, new CollidableComponent(true))
-                .viewFromNode(new Circle(10, Color.LIGHTCORAL))
+                .viewFromNode(new Circle(7, Color.LIGHTCORAL))
                 .build();
     }
 
@@ -91,7 +92,7 @@ public class BreakoutEntityFactory {
      * @param owner Hittable containing the logic for the entity.
      * @return  Entity holding the owner.
      */
-    public static Entity newGlassBrick(double x, double y, GlassBrick owner) {
+    public static Entity newGlassBrick(int x, int y, GlassBrick owner) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.STATIC);
         physics.setFixtureDef(
@@ -101,9 +102,9 @@ public class BreakoutEntityFactory {
         );
         return Entities.builder()
                 .at(x, y)
-                .type(BreakoutGameApp.Type.GLASS_BRICK)
-                .bbox(new HitBox("GlassBrick", BoundingShape.box(100, 50)))
-                .viewFromNode(new Rectangle(100, 50, Color.TURQUOISE))
+                .type(BreakoutGameApp.Type.BRICK)
+                .bbox(new HitBox("GlassBrick", BoundingShape.box(76, 20)))
+                .viewFromNode(new Rectangle(76, 20, Color.TURQUOISE))
                 .with(physics, new CollidableComponent(true), new BrickComponent(owner))
                 .build();
     }
@@ -116,7 +117,7 @@ public class BreakoutEntityFactory {
      * @param owner Hittable containing the logic for the entity.
      * @return  Entity holding the owner.
      */
-    public static Entity newMetalBrick(double x, double y, MetalBrick owner) {
+    public static Entity newMetalBrick(int x, int y, MetalBrick owner) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.STATIC);
         physics.setFixtureDef(
@@ -126,9 +127,9 @@ public class BreakoutEntityFactory {
         );
         return Entities.builder()
                 .at(x, y)
-                .type(BreakoutGameApp.Type.METAL_BRICK)
-                .bbox(new HitBox("MetalBrick", BoundingShape.box(100, 50)))
-                .viewFromNode(new Rectangle(100, 50, Color.DARKGREY))
+                .type(BreakoutGameApp.Type.BRICK)
+                .bbox(new HitBox("MetalBrick", BoundingShape.box(76, 20)))
+                .viewFromNode(new Rectangle(76, 20, Color.DARKGREY))
                 .with(physics, new CollidableComponent(true), new BrickComponent(owner))
                 .build();
     }
@@ -141,7 +142,7 @@ public class BreakoutEntityFactory {
      * @param owner Hittable containing the logic for the entity.
      * @return  Entity holding the owner.
      */
-    public static Entity newWoodenBrick(double x, double y, WoodenBrick owner) {
+    public static Entity newWoodenBrick(int x, int y, WoodenBrick owner) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.STATIC);
         physics.setFixtureDef(
@@ -151,9 +152,9 @@ public class BreakoutEntityFactory {
         );
         return Entities.builder()
                 .at(x, y)
-                .type(BreakoutGameApp.Type.WOODEN_BRICK)
-                .bbox(new HitBox("WoodenBrick", BoundingShape.box(100, 50)))
-                .viewFromNode(new Rectangle(100, 50, Color.CHOCOLATE))
+                .type(BreakoutGameApp.Type.BRICK)
+                .bbox(new HitBox("WoodenBrick", BoundingShape.box(76, 20)))
+                .viewFromNode(new Rectangle(76, 20, Color.CHOCOLATE))
                 .with(physics, new CollidableComponent(true), new BrickComponent(owner))
                 .build();
     }
