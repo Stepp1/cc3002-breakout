@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="567.9027521761393" y="188.0">logic.level</node>
+    <node x="595.0" y="602.0">gui.control.BrickComponent</node>
+    <node x="98.0" y="426.0">facade.HomeworkTwoFacade</node>
+    <node x="402.7474558371736" y="1122.0">gui.BreakoutEntityFactory</node>
+    <node x="492.2956093189964" y="99.0">controller</node>
+    <node x="615.398099078341" y="317.0">logic.brick</node>
+    <node x="362.1110855094726" y="889.0">gui.BreakoutGameApp</node>
+    <node x="592.9702124935997" y="0.0">logic.update</node>
+    <node x="0.0" y="613.0">gui.BreakoutGameApp.Type</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="gui.control.BrickComponent" target="logic.brick">
+      <point x="54.25" y="-25.5" />
+      <point x="757.75" y="406.0" />
+      <point x="703.148099078341" y="406.0" />
+      <point x="29.25" y="14.5" />
+    </edge>
+    <edge source="gui.BreakoutGameApp" target="logic.level">
+      <point x="22.0" y="-91.5" />
+      <point x="516.1110855094726" y="869.0" />
+      <point x="550.5" y="869.0" />
+      <point x="550.5" y="297.0" />
+      <point x="624.9027521761393" y="297.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="logic.level" target="logic.update">
+      <point x="48.857142857142875" y="-14.5" />
+      <point x="673.7598950332822" y="168.0" />
+      <point x="677.5813236047107" y="168.0" />
+      <point x="677.5813236047107" y="79.0" />
+      <point x="672.4146569380441" y="79.0" />
+      <point x="14.444444444444414" y="14.5" />
+    </edge>
+    <edge source="gui.BreakoutEntityFactory" target="gui.BreakoutGameApp">
+      <point x="-71.4" y="-91.5" />
+      <point x="509.8474558371736" y="1092.0" />
+      <point x="428.1110855094726" y="1092.0" />
+      <point x="-66.0" y="91.5" />
+    </edge>
+    <edge source="logic.level" target="controller">
+      <point x="-48.85714285714289" y="-14.5" />
+      <point x="576.0456093189964" y="168.0" />
+      <point x="565.2956093189964" y="168.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="logic.brick" target="logic.brick">
+      <point x="-48.75" y="14.5" />
+      <point x="625.148099078341" y="366.0" />
+      <point x="595.398099078341" y="366.0" />
+      <point x="595.398099078341" y="331.5" />
+      <point x="-58.5" y="-0.0" />
+    </edge>
+    <edge source="gui.BreakoutEntityFactory" target="logic.brick">
+      <point x="142.8" y="-91.5" />
+      <point x="724.0474558371736" y="1102.0" />
+      <point x="822.5" y="1102.0" />
+      <point x="822.5" y="396.0" />
+      <point x="722.648099078341" y="396.0" />
+      <point x="48.75" y="14.5" />
+    </edge>
+    <edge source="logic.level" target="logic.level">
+      <point x="-50.666666666666664" y="14.5" />
+      <point x="574.2360855094727" y="237.0" />
+      <point x="547.9027521761393" y="237.0" />
+      <point x="547.9027521761393" y="212.16666666666674" />
+      <point x="-57.0" y="9.666666666666742" />
+    </edge>
+    <edge source="gui.BreakoutGameApp" target="gui.BreakoutGameApp.Type">
+      <point x="-110.0" y="-91.5" />
+      <point x="384.1110855094726" y="869.0" />
+      <point x="58.5" y="869.0" />
+      <point x="19.5" y="14.5" />
+    </edge>
+    <edge source="logic.level" target="logic.brick">
+      <point x="50.666666666666615" y="14.5" />
+      <point x="675.5694188428059" y="297.0" />
+      <point x="681.210599078341" y="297.0" />
+      <point x="7.3125" y="-14.5" />
+    </edge>
+    <edge source="gui.BreakoutGameApp" target="facade.HomeworkTwoFacade">
+      <point x="-66.0" y="-91.5" />
+      <point x="428.1110855094726" y="859.0" />
+      <point x="208.5" y="859.0" />
+      <point x="-110.5" y="201.5" />
+    </edge>
+    <edge source="gui.BreakoutGameApp" target="gui.control.BrickComponent">
+      <point x="110.0" y="-91.5" />
+      <point x="604.1110855094726" y="869.0" />
+      <point x="649.25" y="869.0" />
+      <point x="-54.25" y="25.5" />
+    </edge>
+    <edge source="logic.update" target="logic.update">
+      <point x="-57.77777777777778" y="14.5" />
+      <point x="600.1924347158218" y="49.0" />
+      <point x="572.9702124935997" y="49.0" />
+      <point x="572.9702124935997" y="14.5" />
+      <point x="-65.0" y="-0.0" />
+    </edge>
+    <edge source="controller" target="logic.brick">
+      <point x="-20.85714285714286" y="14.5" />
+      <point x="544.4384664618535" y="168.0" />
+      <point x="517.4027521761393" y="168.0" />
+      <point x="517.4027521761393" y="277.0" />
+      <point x="622.710599078341" y="277.0" />
+      <point x="-51.1875" y="-14.5" />
+    </edge>
+    <edge source="facade.HomeworkTwoFacade" target="logic.brick">
+      <point x="165.75" y="-201.5" />
+      <point x="484.75" y="386.0" />
+      <point x="644.648099078341" y="386.0" />
+      <point x="-29.25" y="14.5" />
+    </edge>
+    <edge source="logic.brick" target="logic.update">
+      <point x="36.5625" y="-14.5" />
+      <point x="710.460599078341" y="297.0" />
+      <point x="703.4027521761393" y="297.0" />
+      <point x="703.4027521761393" y="79.0" />
+      <point x="701.303545826933" y="79.0" />
+      <point x="43.33333333333333" y="14.5" />
+    </edge>
+    <edge source="logic.update" target="logic.brick">
+      <point x="57.777777777777786" y="14.5" />
+      <point x="715.7479902713774" y="79.0" />
+      <point x="714.4027521761393" y="79.0" />
+      <point x="714.4027521761393" y="287.0" />
+      <point x="725.085599078341" y="287.0" />
+      <point x="51.1875" y="-14.5" />
+    </edge>
+    <edge source="controller" target="logic.update">
+      <point x="36.5" y="-14.5" />
+      <point x="601.7956093189964" y="79.0" />
+      <point x="629.0813236047107" y="79.0" />
+      <point x="-28.888888888888886" y="14.5" />
+    </edge>
+    <edge source="gui.BreakoutGameApp" target="logic.brick">
+      <point x="66.0" y="-91.5" />
+      <point x="560.1110855094726" y="869.0" />
+      <point x="573.0" y="869.0" />
+      <point x="573.0" y="396.0" />
+      <point x="664.148099078341" y="396.0" />
+      <point x="-9.75" y="14.5" />
+    </edge>
+    <edge source="gui.BreakoutEntityFactory" target="gui.control.BrickComponent">
+      <point x="71.40000000000003" y="-91.5" />
+      <point x="652.6474558371737" y="1092.0" />
+      <point x="757.75" y="1092.0" />
+      <point x="54.25" y="25.5" />
+    </edge>
+    <edge source="facade.HomeworkTwoFacade" target="logic.level">
+      <point x="55.25" y="-201.5" />
+      <point x="374.25" y="406.0" />
+      <point x="344.8610855094726" y="406.0" />
+      <point x="344.8610855094726" y="287.0" />
+      <point x="612.2360855094727" y="287.0" />
+      <point x="-12.666666666666657" y="14.5" />
+    </edge>
+    <edge source="gui.BreakoutEntityFactory" target="gui.BreakoutGameApp.Type">
+      <point x="-142.8" y="-91.5" />
+      <point x="438.4474558371736" y="1102.0" />
+      <point x="19.5" y="1102.0" />
+      <point x="-19.5" y="14.5" />
+    </edge>
+    <edge source="gui.BreakoutGameApp" target="gui.BreakoutEntityFactory">
+      <point x="66.0" y="91.5" />
+      <point x="560.1110855094726" y="1102.0" />
+      <point x="581.2474558371737" y="1102.0" />
+      <point x="0.0" y="-91.5" />
+    </edge>
+    <edge source="facade.HomeworkTwoFacade" target="controller">
+      <point x="-165.75" y="-201.5" />
+      <point x="153.25" y="396.0" />
+      <point x="322.8610855094726" y="396.0" />
+      <point x="322.8610855094726" y="148.0" />
+      <point x="502.72418074756786" y="148.0" />
+      <point x="-62.571428571428555" y="14.5" />
+    </edge>
+    <edge source="logic.brick" target="logic.level">
+      <point x="-36.5625" y="-14.5" />
+      <point x="12.666666666666657" y="14.5" />
+    </edge>
+    <edge source="controller" target="logic.level">
+      <point x="20.857142857142833" y="14.5" />
+      <point x="586.1527521761393" y="168.0" />
+      <point x="592.3313236047107" y="168.0" />
+      <point x="-32.571428571428584" y="-14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5121890356197838" x="575.6363936947062" y="629.0058464255541" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
