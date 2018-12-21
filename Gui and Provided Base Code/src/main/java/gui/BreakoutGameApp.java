@@ -1,9 +1,13 @@
 package gui;
 
 import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.particle.ParticleComponent;
+import com.almasb.fxgl.particle.ParticleEmitter;
+import com.almasb.fxgl.particle.ParticleEmitters;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
@@ -83,13 +87,6 @@ public class BreakoutGameApp extends GameApplication {
     private boolean mute = false;
 
     /**
-     * Background music for the game.
-     *
-     * Loaded from resources/assets/music/
-     */
-    // private Music background_song = getAssetLoader().loadMusic("hansatom_-_Drugs_of_Choice_2.mp3");
-
-    /**
      * Random Number Generator
       */
     private Random random_number_generator = new Random();
@@ -125,8 +122,9 @@ public class BreakoutGameApp extends GameApplication {
             getGameWorld().addEntity(e);
 
         // Doesn't play music u.u
+        Music background_song = getAssetLoader().loadMusic("hansatom_-_Drugs_of_Choice_2.mp3");
         getAudioPlayer().setGlobalMusicVolume(0.6);
-        getAudioPlayer().playMusic("hansatom_-_Drugs_of_Choice_2.mp3");
+        getAudioPlayer().playMusic(background_song);
 
     }
 
@@ -185,9 +183,20 @@ public class BreakoutGameApp extends GameApplication {
                         brick.getComponent(BrickComponent.class).getBrick().hit();
                         Level isCurrent = breakout.getCurrentLevel();
 
+                        runParticles(brick);
+
                         if(brick.getComponent(BrickComponent.class).getBrick().isDestroyed()){
                             getAudioPlayer().playSound("brick_hit.wav");
                             getGameWorld().removeEntity(brick);
+                        }
+
+                        if(brick.getComponent(BrickComponent.class).getBrick().getClass() == WoodenBrick.class){
+                            brick.setViewFromTexture("wood.png");
+                        }
+
+                        if(brick.getComponent(BrickComponent.class).getBrick().getClass() == MetalBrick.class){
+                            if(brick.getComponent(BrickComponent.class).getBrick().remainingHits() > 2)
+                                brick.setViewFromTexture("metal_ugly.jpeg");
                         }
 
                         if(!current.equals(isCurrent)){
@@ -195,6 +204,22 @@ public class BreakoutGameApp extends GameApplication {
                                     .forEach(e -> getGameWorld().removeEntity(e));
                             setBricks(isCurrent);
                         }
+                    }
+
+                    private void runParticles(Entity brick) {
+
+                        Entity explosion = new Entity();
+                        explosion.setPosition(brick.getPosition());
+
+                        ParticleEmitter emitter = ParticleEmitters.newExplosionEmitter(1);
+                        // emitter.setBlendMode(Color.WHITE);
+
+                        ParticleComponent component = new ParticleComponent(emitter);
+                        component.setOnFinished(explosion::removeFromWorld);
+
+                        explosion.addComponent(component);
+
+                        getGameWorld().addEntity(explosion);
                     }
                 }
         );
@@ -335,6 +360,7 @@ public class BreakoutGameApp extends GameApplication {
         protected void onActionBegin() {
                 getGameWorld().getEntitiesByType(Type.BALL).forEach(this::ballLauncher);
                 launched = true;
+                // getAudioPlayer().playMusic("hansatom_-_Drugs_of_Choice_2.mp3");
         }
 
         private void ballLauncher(Entity e) {
