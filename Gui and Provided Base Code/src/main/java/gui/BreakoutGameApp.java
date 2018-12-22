@@ -238,7 +238,7 @@ public class BreakoutGameApp extends GameApplication {
     // Function to start a new Game
 
     private void startGame(boolean started){
-        Level lvl = breakout.newLevelWithBricksFull("level", 30, 0.5, 0.34, 0);
+        Level lvl = breakout.newLevelWithBricksFull("level", 30, 0.5, 0.34, random_number_generator.nextInt(10));
         if(started){
             breakout.addPlayingLevel(lvl);
             return;
