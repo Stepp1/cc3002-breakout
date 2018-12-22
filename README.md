@@ -25,6 +25,11 @@ The Breakout game implements the following interactions:
 
 * The A and D keys move the player to the left and to the right respectively. If the player hasn't launched a ball, the keys move the ball also.
 
+* Textures are applied when the Wooden and Metal bricks are hit a certain number of times.
+
+* Sparks are emmited when a brick is hit.
+
+* Different sounds are played when bricks are hit. Also, there's a special sound when a brick is destroyed.
 # Getting Started
 
 * Clone the project wherever you like in your computer.
