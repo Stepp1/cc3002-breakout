@@ -189,12 +189,12 @@ public class BreakoutGameApp extends GameApplication {
                             getAudioPlayer().playSound("brick_hit.wav");
                             getGameWorld().removeEntity(brick);
                         }
-
-                        if(brick.getComponent(BrickComponent.class).getBrick().getClass() == WoodenBrick.class){
+                        else if(brick.getComponent(BrickComponent.class).getBrick().getClass() == WoodenBrick.class){
+                            getAudioPlayer().playSound("wood-creaks.wav");
                             brick.setViewFromTexture("wood.png");
                         }
-
-                        if(brick.getComponent(BrickComponent.class).getBrick().getClass() == MetalBrick.class){
+                        else if(brick.getComponent(BrickComponent.class).getBrick().getClass() == MetalBrick.class){
+                            getAudioPlayer().playSound("metalBrick.wav");
                             if(brick.getComponent(BrickComponent.class).getBrick().remainingHits() > 2)
                                 brick.setViewFromTexture("metal_ugly.jpeg");
                         }
