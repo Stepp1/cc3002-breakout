@@ -3,19 +3,68 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="487.0" y="0.0">controller.Game</node>
-    <node x="0.0" y="698.0">gui.control.BrickComponent</node>
-    <node x="0.0" y="0.0">facade.HomeworkTwoFacade</node>
-    <node x="0.0" y="448.0">gui.BreakoutEntityFactory</node>
-    <node x="402.0" y="448.0">gui.BreakoutGameApp</node>
-    <node x="423.0" y="698.0">gui.BreakoutGameApp.Type</node>
-    <node x="262.0" y="698.0">logic</node>
+    <node x="93.0" y="0.0">controller.Game</node>
+    <node x="560.0" y="607.0">gui.control.BrickComponent</node>
+    <node x="98.0" y="431.0">facade.HomeworkTwoFacade</node>
+    <node x="140.5" y="1139.0">gui.BreakoutEntityFactory</node>
+    <node x="148.484375" y="884.0">gui.BreakoutGameApp</node>
+    <node x="0.0" y="618.0">gui.BreakoutGameApp.Type</node>
+    <node x="822.0" y="0.0">logic</node>
   </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic Group" zoom="0.9283055692320696" x="469.5" y="374.5" />
+  <edges>
+    <edge source="gui.BreakoutGameApp" target="gui.BreakoutGameApp.Type">
+      <point x="-123.0" y="-102.5" />
+      <point x="189.484375" y="859.0" />
+      <point x="58.5" y="859.0" />
+      <point x="19.5" y="14.5" />
+    </edge>
+    <edge source="gui.BreakoutEntityFactory" target="gui.BreakoutGameApp">
+      <point x="-44.625" y="-102.5" />
+      <point x="274.375" y="1114.0" />
+      <point x="230.484375" y="1114.0" />
+      <point x="-82.0" y="102.5" />
+    </edge>
+    <edge source="gui.BreakoutGameApp" target="gui.BreakoutEntityFactory">
+      <point x="82.0" y="102.5" />
+      <point x="394.484375" y="1114.0" />
+      <point x="363.625" y="1114.0" />
+      <point x="44.625" y="-102.5" />
+    </edge>
+    <edge source="gui.BreakoutEntityFactory" target="gui.BreakoutGameApp.Type">
+      <point x="-133.875" y="-102.5" />
+      <point x="185.125" y="1114.0" />
+      <point x="19.5" y="1114.0" />
+      <point x="-19.5" y="14.5" />
+    </edge>
+    <edge source="gui.BreakoutEntityFactory" target="gui.control.BrickComponent">
+      <point x="133.875" y="-102.5" />
+      <point x="452.875" y="1114.0" />
+      <point x="722.75" y="1114.0" />
+      <point x="54.25" y="25.5" />
+    </edge>
+    <edge source="facade.HomeworkTwoFacade" target="controller.Game">
+      <point x="-110.5" y="-201.5" />
+      <point x="208.5" y="406.0" />
+      <point x="206.0" y="406.0" />
+      <point x="-113.0" y="190.5" />
+    </edge>
+    <edge source="gui.BreakoutGameApp" target="facade.HomeworkTwoFacade">
+      <point x="-41.0" y="-102.5" />
+      <point x="271.484375" y="859.0" />
+      <point x="208.5" y="859.0" />
+      <point x="-110.5" y="201.5" />
+    </edge>
+    <edge source="gui.BreakoutGameApp" target="gui.control.BrickComponent">
+      <point x="123.0" y="-102.5" />
+      <point x="435.484375" y="859.0" />
+      <point x="614.25" y="859.0" />
+      <point x="-54.25" y="25.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.45837101125262963" x="453.7739733722872" y="572.7729869769427" />
   <SelectedNodes>
-    <node>controller.Game</node>
+    <node>gui.BreakoutGameApp</node>
   </SelectedNodes>
   <Categories>
     <Category>Methods</Category>
