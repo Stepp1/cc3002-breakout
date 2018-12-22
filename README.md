@@ -37,7 +37,7 @@ The Breakout game implements the following interactions:
 ## Prerequisites
 
 * A java IDE is recommended for running automated tests for the project. The recommended IDE (the one used to make this) is JetBrain's IntelliJ Idea IDE.
-* 
+
 
 ## Installing
 
