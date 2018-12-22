@@ -80,10 +80,6 @@ public class BreakoutGameApp extends GameApplication {
      */
     private final int gameSizeY = 800;
 
-    /**
-     * For muting game audio.
-     */
-    private boolean mute = false;
 
     /**
      * Random Number Generator
