@@ -14,6 +14,7 @@ import gui.control.BrickComponent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import logic.brick.AbstractBrick;
 import logic.brick.GlassBrick;
 import logic.brick.MetalBrick;
 import logic.brick.WoodenBrick;
@@ -109,6 +110,36 @@ class BreakoutEntityFactory implements EntityFactory {
                 .viewFromNode(new Circle(7, Color.LIGHTCORAL))
                 .build();
     }
+
+    /**
+     * Creates a new collide entity holding a {@link AbstractBrick} at the specified location and with the desired size.
+     *
+     * Used for generic brick creation.
+     *
+     * @param x Horizontal coordinate.
+     * @param y Vertical coordinate.
+     * @param owner Hittable containing the logic for the entity.
+     * @return  Entity holding the owner.
+     */
+    static Entity newBrick(int x, int y, AbstractBrick owner){
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.STATIC);
+        physics.setFixtureDef(
+                new FixtureDef()
+                        .restitution(1.1f)
+                        .density(0.1f)
+        );
+        return Entities.builder()
+                .at(x, y)
+                .type(BreakoutGameApp.Type.BRICK)
+                .bbox(new HitBox("GlassBrick", BoundingShape.box(76, 20)))
+                .with(physics, new CollidableComponent(true), new BrickComponent(owner))
+                .build();
+    }
+
+
+    // Not used for Brick creation.
+
 
     /**
      * Creates a new collide entity holding a {@link GlassBrick} at the specified location and with the desired size.

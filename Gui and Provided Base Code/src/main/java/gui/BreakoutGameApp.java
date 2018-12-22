@@ -18,10 +18,9 @@ import facade.HomeworkTwoFacade;
 import gui.control.BrickComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
-import logic.brick.Brick;
-import logic.brick.GlassBrick;
-import logic.brick.MetalBrick;
-import logic.brick.WoodenBrick;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import logic.brick.*;
 import logic.level.Level;
 
 import java.util.Collections;
@@ -260,13 +259,16 @@ public class BreakoutGameApp extends GameApplication {
         Collections.shuffle(lvl.getBricks());
         for(Brick brick : lvl.getBricks()){
             if(brick.getClass() == GlassBrick.class){
-                entities.add(newGlassBrick(posX, posY, (GlassBrick) brick));
+                Entity eBrick = makeBrick(posX, posY, (GlassBrick) brick,  new Rectangle(76, 20, Color.TURQUOISE));
+                entities.add(eBrick);
             }
             else if(brick.getClass() == WoodenBrick.class){
-                entities.add(newWoodenBrick(posX, posY, (WoodenBrick) brick));
+                Entity eBrick = makeBrick(posX, posY, (WoodenBrick) brick, new Rectangle(76, 20, Color.CHOCOLATE));
+                entities.add(eBrick);
             }
             else{
-                entities.add(newMetalBrick(posX, posY, (MetalBrick) brick));
+                Entity eBrick = makeBrick(posX, posY, (MetalBrick) brick, new Rectangle(76, 20, Color.DARKGREY));
+                entities.add(eBrick);
             }
 
             if(posX > 800 - playerX/2 + 50){
@@ -282,6 +284,14 @@ public class BreakoutGameApp extends GameApplication {
             getGameWorld().addEntity(e);
         }
     }
+
+
+    private Entity makeBrick(int posX, int posY, Brick brick, Rectangle rectangle) {
+        Entity e = newBrick(posX, posY , (AbstractBrick) brick);
+        e.setViewWithBBox(rectangle);
+        return e;
+    }
+
 
     public static void main(String... args) {
         launch(args);
