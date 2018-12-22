@@ -23,10 +23,7 @@ import javafx.scene.shape.Rectangle;
 import logic.brick.*;
 import logic.level.Level;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static gui.BreakoutEntityFactory.*;
@@ -154,10 +151,11 @@ public class BreakoutGameApp extends GameApplication {
                             if(!breakout.isGameOver()) {
                                 newLife();
                             }
+                            else if(breakout.winner()){
+                                nextLevel();
+                            }
                             else{
-                                getGameWorld().clear();
-                                getGameWorld().addEntity(newBackground());
-                                getDisplay().showConfirmationBox("Quieres jugar de nuevo?",  check);
+                                playAgain();
                             }
                         }
                     }
@@ -220,7 +218,27 @@ public class BreakoutGameApp extends GameApplication {
         );
     }
 
+    private void nextLevel(){
+        ArrayList<Entity> e = getGameWorld().getEntities();
+        getGameWorld().removeEntities(e);
+        if(breakout.hasNextLevel()){
+            breakout.goNextLevel();
+            Level lvl = breakout.getCurrentLevel();
+            setBricks(lvl);
+        }else{
+            getGameWorld().clear();
+            getGameWorld().addEntity(newBackground());
+            getDisplay().showMessageBox("Ganaste!!");
+            playAgain();
+        }
 
+    }
+
+    private void playAgain() {
+        getGameWorld().clear();
+        getGameWorld().addEntity(newBackground());
+        getDisplay().showConfirmationBox("Quieres jugar de nuevo?",  check);
+    }
     // Consumer to check if user wants to keep playing
 
     private Consumer<Boolean> check = (x) ->{
@@ -234,7 +252,7 @@ public class BreakoutGameApp extends GameApplication {
     // Function to start a new Game
 
     private void startGame(boolean started){
-        Level lvl = breakout.newLevelWithBricksFull("level", 30, 0.5, 0.34, random_number_generator.nextInt(10));
+        Level lvl = breakout.newLevelWithBricksFull("level", 30, 0.5, 0.34, random_number_generator.nextInt(1));
         if(started){
             breakout.addPlayingLevel(lvl);
             return;
