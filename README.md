@@ -60,6 +60,9 @@ Implementing the GUI in the provided Base code (including all the logic and game
 
 For the time being, the GUI uses the provided base code.
 
+## Bugs
+
+For the time being there's only a bug with the speed, and sometimes direction, of the ball. It's believed that this is due to Physics Component in FXGL. If you encounter it (you will know when you do) just press Space to redirection and modify the speed of the ball.
 
 # Built With
 
